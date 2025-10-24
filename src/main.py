@@ -36,6 +36,8 @@ env = Environment(loader=FileSystemLoader("src/templates"), autoescape=select_au
 
 print(f"⌛ Processing type: \033[32m{input_type}")
 
+result = None
+
 if input_type == "redirect":
     if "url" not in data:
         print("::error::Missing required data: url")
@@ -60,10 +62,12 @@ else:
 
 # Outputs
 # https://docs.github.com/en/actions/using-workflows/workflow-commands-for-github-actions#setting-an-output-parameter
-result = "INOP: Possibly an ACT bug..."
-with open(os.environ["GITHUB_OUTPUT"], "a") as f:
-    # noinspection PyTypeChecker
-    print(f"content={result}", file=f)
+# result = "INOP: Possibly an ACT bug..."
+if result:
+    print("Setting output: content")
+    with open(os.environ["GITHUB_OUTPUT"], "a") as f:
+        # noinspection PyTypeChecker
+        print(f"content={result}", file=f)
 
 
 print("✅ \033[32;1mFinished Success")
