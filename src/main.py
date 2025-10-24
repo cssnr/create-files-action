@@ -1,5 +1,6 @@
 import os
 import sys
+from pathlib import Path
 
 from jinja2 import Environment, FileSystemLoader, select_autoescape
 from yaml import Loader, load
@@ -11,6 +12,15 @@ version: str = os.environ.get("GITHUB_WORKFLOW_REF", "") or "Dev Build"
 version = version.rsplit("/", 1)[-1]
 
 print(f"🏳️ Starting Create Files Action - {version}")
+
+
+print(f"os.getcwd: {os.getcwd()}")
+src_dir = os.path.dirname(os.path.realpath(__file__))
+print(f"src_dir: {src_dir}")
+templates = os.path.join(src_dir, "templates")
+print(f"templates: {templates}")
+templates_path = Path(templates)
+print(f"templates: {templates_path.absolute()}")
 
 
 # Inputs
@@ -31,7 +41,7 @@ print(f"data: {data}")
 print("::endgroup::")  # Parse Data
 
 
-env = Environment(loader=FileSystemLoader("src/templates"), autoescape=select_autoescape())
+env = Environment(loader=FileSystemLoader(templates_path.absolute()), autoescape=select_autoescape())
 
 print(f"⌛ Processing type: \033[32m{input_type}")
 
