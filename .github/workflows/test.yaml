@@ -97,6 +97,7 @@ jobs:
           redirect: ${{ steps.redirect.outputs.content }}
           robots: ${{ steps.redirect.outputs.content }}
         run: |
+          set +e
           ls .
           for _file in ${{ env.files }};do
             echo "::group::${_file}"
@@ -107,6 +108,11 @@ jobs:
           done
           [[ -z "${redirect}" ]] && echo "No Output: redirect" && _fail=1
           [[ -z "${robots}" ]] && echo "No Output: robots" && _fail=1
+
+          echo "::group::output - redirect"
+          echo "${redirect}"
+          echo "::endgroup::"
+
           if [ -n "${_fail}" ];then
             exit 1
           fi
