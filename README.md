@@ -72,12 +72,12 @@ data: |
 
 ```yaml
 - name: 'Create Files Action'
-  id: test
-  uses: cssnr/create-files-action@v1
+  id: files
+  uses: cssnr/create-files-action@master
 
 - name: 'Echo Output'
   run: |
-    echo "content: '${{ steps.test.outputs.content }}'"
+    echo "content: '${{ steps.files.outputs.content }}'"
 ```
 
 ## Types
@@ -93,9 +93,40 @@ Creates an HTML redirect page with timer and link.
 | title | `Redireting`       | Title of the page              |
 | timer | `5`                | Redirect timer seconds         |
 
+<details><summary>View Step Example</summary>
+
+```yaml
+- name: 'Redirect'
+  id: redirect
+  uses: cssnr/create-files-action@master
+  with:
+    type: 'redirect'
+    file: 'index.html'
+    data: |
+      url: https://smashedr.github.io/github-projects/
+      text: /github-projects
+      title: Rolf Broke
+      timer: 3
+```
+
+</details>
+
 ### robots
 
 Creates a robots.txt to block all robots.
+
+<details><summary>View Step Example</summary>
+
+```yaml
+- name: 'Robots'
+  id: robots
+  uses: cssnr/create-files-action@master
+  with:
+    type: 'robots'
+    file: 'robots.txt'
+```
+
+</details>
 
 ## Examples
 

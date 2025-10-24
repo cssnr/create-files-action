@@ -7,7 +7,10 @@ from yaml import Loader, load
 from functions import write_file
 
 
-version = os.environ.get("APP_VERSION", os.environ.get("GITHUB_ACTION_REF", "Local Source"))
+version: str = os.environ.get("GITHUB_WORKFLOW_REF", "") or "Dev Build"
+print(f"GITHUB_WORKFLOW_REF: {version}")
+version = version.rsplit("/", 1)[-1]
+
 print(f"🏳️ Starting Create Files Action - {version}")
 
 

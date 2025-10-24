@@ -18,7 +18,7 @@ on:
 
 env:
   files: "index.html robots.txt"
-  image: "false"
+  #image: "false"
 
 concurrency:
   group: ${{ github.workflow }}-${{ github.ref }}
@@ -44,20 +44,20 @@ jobs:
           GITHUB_CTX: ${{ toJSON(github) }}
         run: echo "$GITHUB_CTX"
 
-      - name: "Debug"
-        continue-on-error: true
-        run: |
-          echo "env.image: ${{ env.image }}"
-
-      - name: "Edit YAML"
-        if: ${{ env.image != 'true' }}
-        uses: Liam-Johnston/yaml-helper@V1
-        with:
-          file-location: "action.yml"
-          create-if-does-not-exist: false
-          content: |
-            runs:
-              image: Dockerfile
+      #- name: "Debug"
+      #  continue-on-error: true
+      #  run: |
+      #    echo "env.image: ${{ env.image }}"
+      #
+      #- name: "Edit YAML"
+      #  if: ${{ env.image != 'true' }}
+      #  uses: Liam-Johnston/yaml-helper@V1
+      #  with:
+      #    file-location: "action.yml"
+      #    create-if-does-not-exist: false
+      #    content: |
+      #      runs:
+      #        image: Dockerfile
 
       - name: "Control"
         env:
@@ -97,9 +97,12 @@ jobs:
           content: ${{ steps.redirect.outputs.content }}
         run: |
           ls .
-          for file in ${{ env.files }};do
-            stat "${file}"
-            head "${file}" || _fail=1
+          for _file in ${{ env.files }};do
+            echo "::group::${_file}"
+            file "${_file}"
+            echo "--------------------"
+            head "${_file}" || _fail=1
+            echo "::endgroup::"
           done
           if [ -z "${content}" ];then
             echo "No Output: content"
