@@ -5,16 +5,8 @@ on:
   #schedule:
   #  - cron: "18 18 * * 1,3,5"
   push:
-    branches: ["**"]
-    paths:
-      - ".github/workflows/test.yaml"
-      - "dist/**"
-      - "src/**"
-      - "package*.json"
-      - "requirements*.txt"
-      - "action.yml"
-      - "Dockerfile"
-      - "pyproject.toml"
+    branches: [master]
+  pull_request:
 
 env:
   files: "index.html robots.txt"
@@ -99,6 +91,7 @@ jobs:
         run: |
           set +e
           ls .
+
           for _file in ${{ env.files }};do
             echo "::group::${_file}"
             file "${_file}"
@@ -106,6 +99,7 @@ jobs:
             head "${_file}" || _fail=1
             echo "::endgroup::"
           done
+
           [[ -z "${redirect}" ]] && echo "No Output: redirect" && _fail=1
           [[ -z "${robots}" ]] && echo "No Output: robots" && _fail=1
 
