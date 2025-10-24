@@ -1,0 +1,200 @@
+[![GitHub Tag Major](https://img.shields.io/github/v/tag/cssnr/create-files-action?sort=semver&filter=!v*.*&logo=git&logoColor=white&labelColor=585858&label=%20)](https://github.com/cssnr/create-files-action/tags)
+[![GitHub Tag Minor](https://img.shields.io/github/v/tag/cssnr/create-files-action?sort=semver&filter=!v*.*.*&logo=git&logoColor=white&labelColor=585858&label=%20)](https://github.com/cssnr/create-files-action/releases)
+[![GitHub Release Version](https://img.shields.io/github/v/release/cssnr/create-files-action?logo=git&logoColor=white&labelColor=585858&label=%20)](https://github.com/cssnr/create-files-action/releases/latest)
+[![Image Size](https://badges.cssnr.com/ghcr/size/cssnr/create-files-action)](https://github.com/cssnr/create-files-action/pkgs/container/docker-test-action)
+[![Image Latest](https://badges.cssnr.com/ghcr/tags/cssnr/create-files-action/latest)](https://github.com/cssnr/create-files-action/pkgs/container/docker-test-action)
+[![YAML Version](https://badges.cssnr.com/yaml/https%3A%2F%2Fraw.githubusercontent.com%2Fsmashedr%2Fdocker-test-action%2Frefs%2Fheads%2Fmaster%2Faction.yml/%24.runs.image?split=:&index=2&label=action.yaml)](https://github.com/cssnr/create-files-action/blob/master/action.yml#L28)
+[![Workflow Release](https://img.shields.io/github/actions/workflow/status/cssnr/create-files-action/release.yaml?logo=cachet&label=release)](https://github.com/cssnr/create-files-action/actions/workflows/release.yaml)
+[![Workflow Test](https://img.shields.io/github/actions/workflow/status/cssnr/create-files-action/test.yaml?logo=cachet&label=test)](https://github.com/cssnr/create-files-action/actions/workflows/test.yaml)
+[![Workflow Lint](https://img.shields.io/github/actions/workflow/status/cssnr/create-files-action/lint.yaml?logo=cachet&label=lint)](https://github.com/cssnr/create-files-action/actions/workflows/lint.yaml)
+[![Quality Gate Status](https://sonarcloud.io/api/project_badges/measure?project=smashedr_docker-test-action&metric=alert_status)](https://sonarcloud.io/summary/new_code?id=smashedr_docker-test-action)
+[![GitHub Last Commit](https://img.shields.io/github/last-commit/cssnr/create-files-action?logo=github&label=updated)](https://github.com/cssnr/create-files-action/pulse)
+[![Codeberg Last Commit](https://img.shields.io/gitea/last-commit/shaner/docker-test-action/master?gitea_url=https%3A%2F%2Fcodeberg.org%2F&logo=codeberg&logoColor=white&label=updated)](https://codeberg.org/shaner/docker-test-action)
+[![GitHub Contributors](https://img.shields.io/github/contributors-anon/cssnr/create-files-action?logo=github)](https://github.com/cssnr/create-files-action/graphs/contributors)
+[![GitHub Repo Size](https://img.shields.io/github/repo-size/cssnr/create-files-action?logo=bookstack&logoColor=white&label=repo%20size)](https://github.com/cssnr/create-files-action?tab=readme-ov-file#readme)
+[![GitHub Top Language](https://img.shields.io/github/languages/top/cssnr/create-files-action?logo=htmx)](https://github.com/cssnr/create-files-action)
+[![GitHub Forks](https://img.shields.io/github/forks/cssnr/create-files-action?style=flat&logo=github)](https://github.com/cssnr/create-files-action/forks)
+[![GitHub Discussions](https://img.shields.io/github/discussions/cssnr/create-files-action?logo=github)](https://github.com/cssnr/create-files-action/discussions)
+[![GitHub Repo Stars](https://img.shields.io/github/stars/cssnr/create-files-action?style=flat&logo=github)](https://github.com/cssnr/create-files-action/stargazers)
+[![GitHub Org Stars](https://img.shields.io/github/stars/cssnr?style=flat&logo=github&label=org%20stars)](https://cssnr.github.io/)
+[![Discord](https://img.shields.io/discord/899171661457293343?logo=discord&logoColor=white&label=discord&color=7289da)](https://discord.gg/wXy6m2X8wY)
+[![Ko-fi](https://img.shields.io/badge/Ko--fi-72a5f2?logo=kofi&label=support)](https://ko-fi.com/cssnr)
+
+# Create Files Action
+
+- [Inputs](#Inputs)
+- [Outputs](#Outputs)
+- [Types](#Types)
+- [Examples](#Examples)
+- [Tags](#Tags)
+- [Contributing](#Contributing)
+
+Easily create various file [types](#Types) with custom options.
+Write the data to a file or use the [output](#Outputs).
+
+## Inputs
+
+| Input         |  Default   | Input&nbsp;Description |
+| :------------ | :--------: | :--------------------- |
+| [type](#type) | _Required_ | Type of File to Create |
+| [file](#file) |     -      | Output File to Create  |
+| [data](#data) |     -      | File Data for `type`   |
+
+#### type
+
+Currently only supports [redirect](#redirect) html file.
+
+#### file
+
+Output file path to write file; otherwise use the [output](#Outputs).
+
+#### data
+
+[Type](#Types) specific data in YAML format.
+
+<details><summary>How to Pass Data</summary>
+
+```yaml
+data: |
+  url: https://smashedr.github.io/github-projects/
+  text: /github-projects
+  title: Ralf Broke It
+  timer: 5
+```
+
+</details>
+
+## Outputs
+
+| Output  | Description  |
+| :------ | :----------- |
+| content | File Content |
+
+```yaml
+- name: 'Create Files Action'
+  id: test
+  uses: cssnr/create-files-action@v1
+
+- name: 'Echo Output'
+  run: |
+    echo "content: '${{ steps.test.outputs.content }}'"
+```
+
+## Types
+
+### redirect
+
+Creates an HTML redirect page with timer and link.
+
+| Data  | Default&nbsp;Value | Description&nbsp;of&nbsp;Input |
+| :---- | :----------------- | :----------------------------- |
+| url   | -                  | URL to Redirect too            |
+| text  | _url_              | Text for URL link              |
+| title | `Redireting`       | Title of the page              |
+| timer | `5`                | Redirect timer seconds         |
+
+### robots
+
+Creates a robots.txt to block all robots.
+
+## Examples
+
+💡 _Click on an example heading to expand or collapse the example._
+
+Coming soon.
+
+For more examples, you can check out other projects using this action:  
+https://github.com/cssnr/create-files-action/network/dependents
+
+## Tags
+
+The following rolling [tags](https://github.com/cssnr/create-files-action/tags) are maintained.
+
+| Version&nbsp;Tag                                                                                                                                                                                                       | Rolling | Bugs | Feat. |   Name    |  Target  | Example  |
+| :--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | :-----: | :--: | :---: | :-------: | :------: | :------- |
+| [![GitHub Tag Major](https://img.shields.io/github/v/tag/cssnr/create-files-action?sort=semver&filter=!v*.*&style=for-the-badge&label=%20&color=44cc10)](https://github.com/cssnr/create-files-action/releases/latest) |   ✅    |  ✅  |  ✅   | **Major** | `vN.x.x` | `vN`     |
+| [![GitHub Tag Minor](https://img.shields.io/github/v/tag/cssnr/create-files-action?sort=semver&filter=!v*.*.*&style=for-the-badge&label=%20&color=blue)](https://github.com/cssnr/create-files-action/releases/latest) |   ✅    |  ✅  |  ❌   | **Minor** | `vN.N.x` | `vN.N`   |
+| [![GitHub Release](https://img.shields.io/github/v/release/cssnr/create-files-action?style=for-the-badge&label=%20&color=red)](https://github.com/cssnr/create-files-action/releases/latest)                           |   ❌    |  ❌  |  ❌   | **Micro** | `vN.N.N` | `vN.N.N` |
+
+You can view the release notes for each version on the [releases](https://github.com/cssnr/create-files-action/releases) page.
+
+The **Major** tag is recommended. It is the most up-to-date and always backwards compatible.
+Breaking changes would result in a **Major** version bump. At a minimum you should use a **Minor** tag.
+
+# Support
+
+For general help or to request a feature see:
+
+- Q&A Discussion: https://github.com/cssnr/create-files-action/discussions/categories/q-a
+- Request a Feature: https://github.com/cssnr/create-files-action/discussions/categories/feature-requests
+
+If you are experiencing an issue/bug or getting unexpected results you can:
+
+- Report an Issue: https://github.com/cssnr/create-files-action/issues
+- Chat with us on Discord: https://discord.gg/wXy6m2X8wY
+- Provide General Feedback: [https://cssnr.github.io/feedback/](https://cssnr.github.io/feedback/?app=Stack%20Deploy)
+
+For more information, see the CSSNR [SUPPORT.md](https://github.com/cssnr/.github/blob/master/.github/SUPPORT.md#support).
+
+# Contributing
+
+For more information, see the CSSNR [CONTRIBUTING.md](#contributing-ov-file).
+
+Please consider making a donation to support the development of this project
+and [additional](https://cssnr.com/) open source projects.
+
+[![Ko-fi](https://ko-fi.com/img/githubbutton_sm.svg)](https://ko-fi.com/cssnr)
+
+Additionally, you can support other GitHub Actions I have published:
+
+- [Stack Deploy Action](https://github.com/cssnr/stack-deploy-action?tab=readme-ov-file#readme)
+- [Portainer Stack Deploy Action](https://github.com/cssnr/portainer-stack-deploy-action?tab=readme-ov-file#readme)
+- [Docker Context Action](https://github.com/cssnr/docker-context-action?tab=readme-ov-file#readme)
+- [VirusTotal Action](https://github.com/cssnr/virustotal-action?tab=readme-ov-file#readme)
+- [Mirror Repository Action](https://github.com/cssnr/mirror-repository-action?tab=readme-ov-file#readme)
+- [Update Version Tags Action](https://github.com/cssnr/update-version-tags-action?tab=readme-ov-file#readme)
+- [Docker Tags Action](https://github.com/cssnr/docker-tags-action?tab=readme-ov-file#readme)
+- [Update JSON Value Action](https://github.com/cssnr/update-json-value-action?tab=readme-ov-file#readme)
+- [JSON Key Value Check Action](https://github.com/cssnr/json-key-value-check-action?tab=readme-ov-file#readme)
+- [Parse Issue Form Action](https://github.com/cssnr/parse-issue-form-action?tab=readme-ov-file#readme)
+- [Cloudflare Purge Cache Action](https://github.com/cssnr/cloudflare-purge-cache-action?tab=readme-ov-file#readme)
+- [Mozilla Addon Update Action](https://github.com/cssnr/mozilla-addon-update-action?tab=readme-ov-file#readme)
+- [Package Changelog Action](https://github.com/cssnr/package-changelog-action?tab=readme-ov-file#readme)
+- [NPM Outdated Check Action](https://github.com/cssnr/npm-outdated-action?tab=readme-ov-file#readme)
+- [Label Creator Action](https://github.com/cssnr/label-creator-action?tab=readme-ov-file#readme)
+- [Algolia Crawler Action](https://github.com/cssnr/algolia-crawler-action?tab=readme-ov-file#readme)
+- [Upload Release Action](https://github.com/cssnr/upload-release-action?tab=readme-ov-file#readme)
+- [Check Build Action](https://github.com/cssnr/check-build-action?tab=readme-ov-file#readme)
+- [Web Request Action](https://github.com/cssnr/web-request-action?tab=readme-ov-file#readme)
+- [Get Commit Action](https://github.com/cssnr/get-commit-action?tab=readme-ov-file#readme)
+
+<details><summary>❔ Unpublished Actions</summary>
+
+These actions are not published on the Marketplace, but may be useful.
+
+- [cssnr/draft-release-action](https://github.com/cssnr/draft-release-action?tab=readme-ov-file#readme) - Keep a draft release ready to publish.
+- [cssnr/env-json-action](https://github.com/cssnr/env-json-action?tab=readme-ov-file#readme) - Convert env file to json or vice versa.
+- [cssnr/push-artifacts-action](https://github.com/cssnr/push-artifacts-action?tab=readme-ov-file#readme) - Sync files to a remote host with rsync.
+- [smashedr/update-release-notes-action](https://github.com/smashedr/update-release-notes-action?tab=readme-ov-file#readme) - Update release notes.
+- [smashedr/combine-release-notes-action](https://github.com/smashedr/combine-release-notes-action?tab=readme-ov-file#readme) - Combine release notes.
+
+---
+
+</details>
+
+<details><summary>📝 Template Actions</summary>
+
+These are basic action templates that I use for creating new actions.
+
+- [js-test-action](https://github.com/smashedr/js-test-action?tab=readme-ov-file#readme) - JavaScript
+- [py-test-action](https://github.com/smashedr/py-test-action?tab=readme-ov-file#readme) - Python
+- [ts-test-action](https://github.com/smashedr/ts-test-action?tab=readme-ov-file#readme) - TypeScript
+- [docker-test-action](https://github.com/smashedr/docker-test-action?tab=readme-ov-file#readme) - Docker Image
+
+Note: The `docker-test-action` builds, runs and pushes images to [GitHub Container Registry](https://docs.github.com/en/packages/working-with-a-github-packages-registry/working-with-the-container-registry).
+
+---
+
+</details>
+
+For a full list of current projects visit: [https://cssnr.github.io/](https://cssnr.github.io/)

@@ -1,0 +1,54 @@
+name: "Verify"
+
+on:
+  workflow_dispatch:
+  workflow_run:
+    workflows: ["Release"]
+    types: [completed]
+
+concurrency:
+  group: ${{ github.workflow }}-${{ github.ref }}
+  cancel-in-progress: false
+
+jobs:
+  verify:
+    name: "Verify"
+    runs-on: ubuntu-latest
+    timeout-minutes: 5
+
+    permissions:
+      contents: write
+
+    steps:
+      - name: "Debug Event"
+        if: ${{ !github.event.act }}
+        continue-on-error: true
+        run: |
+          cat "${GITHUB_EVENT_PATH}"
+
+      #- name: "Test Published Action"
+      #  uses: cssnr/create-files-action@v1
+      #  id: test
+      #  with:
+      #    type: "redirect"
+      #    file: "index.html"
+      #    data: |
+      #      url: https://smashedr.github.io/github-projects/
+      #      text: /github-projects
+      #      title: Rolf Broke
+      #      timer: 3
+      #
+      #- name: "Validate Outputs"
+      #  id: validate
+      #  run: |
+      #    echo "sha: '${{ steps.test.outputs.sha }}'"
+      #    if [ "${{ steps.test.outputs.sha }}" != "${GITHUB_SHA}" ];then
+      #      echo "Output Verification Failed: sha"
+      #      exit 1
+      #    fi
+      #
+      #- name: "Schedule Failure Notification"
+      #  if: ${{ failure() && github.event_name != 'workflow_dispatch' }}
+      #  uses: sarisia/actions-status-discord@v1
+      #  with:
+      #    webhook: ${{ secrets.DISCORD_WEBHOOK }}

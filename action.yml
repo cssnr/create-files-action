@@ -1,0 +1,31 @@
+name: "Create Files Action"
+description: "Create Files Action."
+author: "Shane"
+branding:
+  icon: "file-plus"
+  color: "green"
+
+inputs:
+  type:
+    description: "Type of File to Create"
+    default: "test"
+  file:
+    description: "Output File to Create"
+    default: "test"
+  data:
+    description: "File Data"
+    default: "test"
+  #summary:
+  #  description: "Add Summary to Job"
+  #  default: "true"
+  #token:
+  #  description: "GitHub Token"
+  #  default: ${{ github.token }}
+
+outputs:
+  content:
+    description: "File Content"
+
+runs:
+  using: "docker"
+  image: "docker://ghcr.io/cssnr/create-files-action:v1.0.0"
