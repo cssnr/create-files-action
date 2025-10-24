@@ -79,7 +79,7 @@ if result:
     output = result.replace("\n", "\\n").replace("\r", "")
     with open(os.environ["GITHUB_OUTPUT"], "a") as f:
         # noinspection PyTypeChecker
-        print(f"content={result}", file=f)
+        print(f"content={output}", file=f)
 
 
 print("✅ \033[32;1mFinished Success")
