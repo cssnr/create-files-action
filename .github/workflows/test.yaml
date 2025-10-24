@@ -90,7 +90,6 @@ jobs:
           robots: ${{ steps.redirect.outputs.content }}
         run: |
           set +e
-          ls .
 
           for _file in ${{ env.files }};do
             echo "::group::${_file}"
