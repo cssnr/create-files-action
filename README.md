@@ -1,3 +1,6 @@
+[![GitHub Tag Major](https://img.shields.io/github/v/tag/cssnr/create-files-action?sort=semver&filter=!v*.*&logo=git&logoColor=white&labelColor=585858&label=%20)](https://github.com/cssnr/create-files-action/tags)
+[![GitHub Tag Minor](https://img.shields.io/github/v/tag/cssnr/create-files-action?sort=semver&filter=!v*.*.*&logo=git&logoColor=white&labelColor=585858&label=%20)](https://github.com/cssnr/create-files-action/releases)
+[![GitHub Release Version](https://img.shields.io/github/v/release/cssnr/create-files-action?logo=git&logoColor=white&labelColor=585858&label=%20)](https://github.com/cssnr/create-files-action/releases/latest)
 [![Workflow Test](https://img.shields.io/github/actions/workflow/status/cssnr/create-files-action/test.yaml?logo=cachet&label=test)](https://github.com/cssnr/create-files-action/actions/workflows/test.yaml)
 [![Workflow Lint](https://img.shields.io/github/actions/workflow/status/cssnr/create-files-action/lint.yaml?logo=cachet&label=lint)](https://github.com/cssnr/create-files-action/actions/workflows/lint.yaml)
 [![Quality Gate Status](https://sonarcloud.io/api/project_badges/measure?project=cssnr_create-files-action&metric=alert_status)](https://sonarcloud.io/summary/new_code?id=cssnr_create-files-action)
