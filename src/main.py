@@ -14,13 +14,13 @@ version = version.rsplit("/", 1)[-1]
 print(f"🏳️ Starting Create Files Action - {version}")
 
 
-print(f"os.getcwd: {os.getcwd()}")
-src_dir = os.path.dirname(os.path.realpath(__file__))
-print(f"src_dir: {src_dir}")
-templates = os.path.join(src_dir, "templates")
+# Environment
+print("::group::Environment")
+src_path = Path(__file__).resolve().parent
+print(f"src_path: {src_path}")
+templates = src_path / "templates"
 print(f"templates: {templates}")
-templates_path = Path(templates)
-print(f"templates: {templates_path.absolute()}")
+print("::endgroup::")  # Environment
 
 
 # Inputs
@@ -41,7 +41,7 @@ print(f"data: {data}")
 print("::endgroup::")  # Parse Data
 
 
-env = Environment(loader=FileSystemLoader(templates_path.absolute()), autoescape=select_autoescape())
+env = Environment(loader=FileSystemLoader(templates), autoescape=select_autoescape())
 
 print(f"⌛ Processing type: \033[32m{input_type}")
 
