@@ -8,7 +8,6 @@ from functions import write_file
 
 
 version: str = os.environ.get("GITHUB_WORKFLOW_REF", "") or "Dev Build"
-# print(f"GITHUB_WORKFLOW_REF: {version}")
 version = version.rsplit("/", 1)[-1]
 
 print(f"🏳️ Starting Create Files Action - {version}")
@@ -64,13 +63,9 @@ else:
 # https://docs.github.com/en/actions/using-workflows/workflow-commands-for-github-actions#setting-an-output-parameter
 if result:
     print("Setting output: content")
-    # output = result.replace("\n", "\\n").replace("\r", "")
     with open(os.environ["GITHUB_OUTPUT"], "a") as f:
         # noinspection PyTypeChecker
-        # print(f"content={output}", file=f)
         print(f"content<<EOF\n{result}\nEOF", file=f)
 
 
 print("✅ \033[32;1mFinished Success")
-
-# literally retarded sonar
