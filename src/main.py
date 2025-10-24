@@ -8,7 +8,7 @@ from functions import write_file
 
 
 version: str = os.environ.get("GITHUB_WORKFLOW_REF", "") or "Dev Build"
-print(f"GITHUB_WORKFLOW_REF: {version}")
+# print(f"GITHUB_WORKFLOW_REF: {version}")
 version = version.rsplit("/", 1)[-1]
 
 print(f"🏳️ Starting Create Files Action - {version}")
@@ -21,11 +21,7 @@ print(f"input_type: \033[36;1m{input_type}")
 input_file = os.environ.get("INPUT_FILE", "").strip()
 print(f"input_file: \033[36;1m{input_file}")
 input_data = os.environ.get("INPUT_DATA", "").strip()
-print(f"input_data: \033[36;1m{input_data}")
-# input_summary = os.environ.get("INPUT_SUMMARY", "").strip().lower()
-# print(f"input_summary: \033[36;1m{input_summary}")
-# input_token = os.environ.get("INPUT_TOKEN", "").strip()
-# print(f"input_token: \033[36;1m{input_token}")
+# print(f"input_data: \033[36;1m{input_data}")
 print("::endgroup::")  # Parse Inputs
 
 
