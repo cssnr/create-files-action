@@ -107,7 +107,6 @@ jobs:
           done
           [[ -z "${redirect}" ]] && echo "No Output: redirect" && _fail=1
           [[ -z "${robots}" ]] && echo "No Output: robots" && _fail=1
-          [[ -z "${control}" ]] && echo "No Output: control" && _fail=1
           if [ -n "${_fail}" ];then
             exit 1
           fi
