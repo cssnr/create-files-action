@@ -1,7 +1,3 @@
-[![GitHub Tag Major](https://img.shields.io/github/v/tag/cssnr/create-files-action?sort=semver&filter=!v*.*&logo=git&logoColor=white&labelColor=585858&label=%20)](https://github.com/cssnr/create-files-action/tags)
-[![GitHub Tag Minor](https://img.shields.io/github/v/tag/cssnr/create-files-action?sort=semver&filter=!v*.*.*&logo=git&logoColor=white&labelColor=585858&label=%20)](https://github.com/cssnr/create-files-action/releases)
-[![GitHub Release Version](https://img.shields.io/github/v/release/cssnr/create-files-action?logo=git&logoColor=white&labelColor=585858&label=%20)](https://github.com/cssnr/create-files-action/releases/latest)
-[![Workflow Release](https://img.shields.io/github/actions/workflow/status/cssnr/create-files-action/release.yaml?logo=cachet&label=release)](https://github.com/cssnr/create-files-action/actions/workflows/release.yaml)
 [![Workflow Test](https://img.shields.io/github/actions/workflow/status/cssnr/create-files-action/test.yaml?logo=cachet&label=test)](https://github.com/cssnr/create-files-action/actions/workflows/test.yaml)
 [![Workflow Lint](https://img.shields.io/github/actions/workflow/status/cssnr/create-files-action/lint.yaml?logo=cachet&label=lint)](https://github.com/cssnr/create-files-action/actions/workflows/lint.yaml)
 [![Quality Gate Status](https://sonarcloud.io/api/project_badges/measure?project=cssnr_create-files-action&metric=alert_status)](https://sonarcloud.io/summary/new_code?id=cssnr_create-files-action)
@@ -23,7 +19,6 @@
 - [Outputs](#Outputs)
 - [Types](#Types)
 - [Examples](#Examples)
-- [Tags](#Tags)
 - [Contributing](#Contributing)
 
 Easily create various file [types](#Types) with custom options.
@@ -133,21 +128,6 @@ Coming soon.
 
 For more examples, you can check out other projects using this action:  
 https://github.com/cssnr/create-files-action/network/dependents
-
-## Tags
-
-The following rolling [tags](https://github.com/cssnr/create-files-action/tags) are maintained.
-
-| Version&nbsp;Tag                                                                                                                                                                                                       | Rolling | Bugs | Feat. |   Name    |  Target  | Example  |
-| :--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | :-----: | :--: | :---: | :-------: | :------: | :------- |
-| [![GitHub Tag Major](https://img.shields.io/github/v/tag/cssnr/create-files-action?sort=semver&filter=!v*.*&style=for-the-badge&label=%20&color=44cc10)](https://github.com/cssnr/create-files-action/releases/latest) |   ✅    |  ✅  |  ✅   | **Major** | `vN.x.x` | `vN`     |
-| [![GitHub Tag Minor](https://img.shields.io/github/v/tag/cssnr/create-files-action?sort=semver&filter=!v*.*.*&style=for-the-badge&label=%20&color=blue)](https://github.com/cssnr/create-files-action/releases/latest) |   ✅    |  ✅  |  ❌   | **Minor** | `vN.N.x` | `vN.N`   |
-| [![GitHub Release](https://img.shields.io/github/v/release/cssnr/create-files-action?style=for-the-badge&label=%20&color=red)](https://github.com/cssnr/create-files-action/releases/latest)                           |   ❌    |  ❌  |  ❌   | **Micro** | `vN.N.N` | `vN.N.N` |
-
-You can view the release notes for each version on the [releases](https://github.com/cssnr/create-files-action/releases) page.
-
-The **Major** tag is recommended. It is the most up-to-date and always backwards compatible.
-Breaking changes would result in a **Major** version bump. At a minimum you should use a **Minor** tag.
 
 # Support
 
