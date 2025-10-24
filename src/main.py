@@ -60,11 +60,23 @@ else:
     sys.exit(1)
 
 
+
+print("::group::Debug - result")
+print(f"result: {result}")
+print("::endgroup::")  # Debug
+if result:
+    output = result.replace("\n", "\\n").replace("\r", "")
+    print("::group::Debug - output")
+    print(f"output: {output}")
+    print("::endgroup::")  # Debug
+
+
 # Outputs
 # https://docs.github.com/en/actions/using-workflows/workflow-commands-for-github-actions#setting-an-output-parameter
 # result = "INOP: Possibly an ACT bug..."
 if result:
     print("Setting output: content")
+    output = result.replace("\n", "\\n").replace("\r", "")
     with open(os.environ["GITHUB_OUTPUT"], "a") as f:
         # noinspection PyTypeChecker
         print(f"content={result}", file=f)
