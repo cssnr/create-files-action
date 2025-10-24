@@ -21,7 +21,6 @@ document.addEventListener('DOMContentLoaded', () => {
         if (totalSeconds === 0) {
             clearInterval(interval)
             window.location = targetLocation
-            // document.body.style.backgroundColor = '#004b00'
         }
         totalSeconds--
     }, 1000)

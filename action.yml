@@ -15,12 +15,6 @@ inputs:
   data:
     description: "File Data"
     default: "test"
-  #summary:
-  #  description: "Add Summary to Job"
-  #  default: "true"
-  #token:
-  #  description: "GitHub Token"
-  #  default: ${{ github.token }}
 
 outputs:
   content:
