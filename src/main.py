@@ -62,13 +62,13 @@ else:
 
 # Outputs
 # https://docs.github.com/en/actions/using-workflows/workflow-commands-for-github-actions#setting-an-output-parameter
-# result = "INOP: Possibly an ACT bug..."
 if result:
     print("Setting output: content")
-    output = result.replace("\n", "\\n").replace("\r", "")
+    # output = result.replace("\n", "\\n").replace("\r", "")
     with open(os.environ["GITHUB_OUTPUT"], "a") as f:
         # noinspection PyTypeChecker
-        print(f"content={output}", file=f)
+        # print(f"content={output}", file=f)
+        print(f"content<<EOF\n{result}\nEOF", file=f)
 
 
 print("✅ \033[32;1mFinished Success")
