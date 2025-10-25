@@ -13,13 +13,9 @@ version = version.rsplit("/", 1)[-1]
 
 print(f"🏳️ Starting Create Files Action - \033[36;1m{version}")
 
-src_path = Path(__file__).resolve().parent
-print(f"src_path: {src_path}")
-templates = src_path / "templates"
-print(f"templates: {templates}")
 
 # Inputs
-print("::group::Parse Inputs")
+print("::group::Inputs")
 input_type = os.environ.get("INPUT_TYPE", "").strip().lower()
 print(f"input_type: \033[36;1m{input_type}")
 input_file = os.environ.get("INPUT_FILE", "").strip()
@@ -28,10 +24,20 @@ input_data = os.environ.get("INPUT_DATA", "").strip()
 # print(f"input_data: \033[36;1m{input_data}")
 data = load(input_data, Loader=Loader)
 print(f"input_data: \033[36;1m{data}")
-print("::endgroup::")  # Parse Inputs
+print("::endgroup::")  # Inputs
 
 
-print(f"⌛ Processing type: \033[32m{input_type}")
+# Setup
+print("::group::Setup")
+print(f"getcwd: {os.getcwd()}")
+src_path = Path(__file__).resolve().parent
+print(f"src_path: {src_path}")
+templates = src_path / "templates"
+print(f"templates: {templates}")
+print("::endgroup::")  # Setup
+
+
+print(f"⌛ Processing type: \033[35m{input_type}")
 
 env = Environment(loader=FileSystemLoader(templates), autoescape=select_autoescape())
 
@@ -64,7 +70,6 @@ if not result:
 
 # Outputs
 # https://docs.github.com/en/actions/using-workflows/workflow-commands-for-github-actions#setting-an-output-parameter
-print("Setting output: content")
 with open(os.environ["GITHUB_OUTPUT"], "a") as f:
     # noinspection PyTypeChecker
     print(f"content<<EOF\n{result}\nEOF", file=f)
