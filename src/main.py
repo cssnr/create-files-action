@@ -41,7 +41,7 @@ if input_type == "redirect":
     if "url" not in data:
         print("::error::Missing required data: url")
         sys.exit(1)
-    ctx = {"title": "Redirecting", "timer": 3}
+    ctx = {"title": "Redirecting", "timer": 5}
     ctx.update(data)
     if "text" not in ctx:
         ctx["text"] = data["url"]
