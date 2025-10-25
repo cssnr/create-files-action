@@ -14,7 +14,7 @@ output = os.path.join(src_dir, "output")
 env = Environment(loader=FileSystemLoader(templates), autoescape=select_autoescape())
 
 
-def render_file(source, target, data):
+def render_file(source: str, target: str, data: dict):
     print(f"rendering: {source} -> {target}")
     template = env.get_template(f"{source}")
     result = template.render(data)

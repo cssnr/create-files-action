@@ -2,6 +2,8 @@ from pathlib import Path
 
 
 def write_file(file: str, string: str, mkdir: bool = False):
+    if not file:
+        return
     path = Path(file)
     if mkdir and not path.parent.exists():
         print(f"makedirs: \033[33m{path.parent}")
