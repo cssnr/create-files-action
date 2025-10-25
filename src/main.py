@@ -11,17 +11,12 @@ from functions import write_file
 version: str = os.environ.get("GITHUB_WORKFLOW_REF", "") or "Dev Build"
 version = version.rsplit("/", 1)[-1]
 
-print(f"🏳️ Starting Create Files Action - {version}")
+print(f"🏳️ Starting Create Files Action - \033[36;1m{version}")
 
-
-# Environment
-print("::group::Environment")
 src_path = Path(__file__).resolve().parent
 print(f"src_path: {src_path}")
 templates = src_path / "templates"
 print(f"templates: {templates}")
-print("::endgroup::")  # Environment
-
 
 # Inputs
 print("::group::Parse Inputs")
@@ -31,19 +26,14 @@ input_file = os.environ.get("INPUT_FILE", "").strip()
 print(f"input_file: \033[36;1m{input_file}")
 input_data = os.environ.get("INPUT_DATA", "").strip()
 # print(f"input_data: \033[36;1m{input_data}")
+data = load(input_data, Loader=Loader)
+print(f"input_data: \033[36;1m{data}")
 print("::endgroup::")  # Parse Inputs
 
 
-# Data
-print("::group::Parse Data")
-data = load(input_data, Loader=Loader)
-print(f"data: {data}")
-print("::endgroup::")  # Parse Data
-
+print(f"⌛ Processing type: \033[32m{input_type}")
 
 env = Environment(loader=FileSystemLoader(templates), autoescape=select_autoescape())
-
-print(f"⌛ Processing type: \033[32m{input_type}")
 
 result = None
 
@@ -58,24 +48,26 @@ if input_type == "redirect":
     template = env.get_template("redirect.jinja")
     result = template.render(ctx)
     # print(f"result: {result}")
-    if input_file:
-        write_file(input_file, result, True)
+    write_file(input_file, result, True)
 elif input_type == "robots":
-    content = "User-agent: *\nDisallow: /\n"
-    with open(input_file, "w") as f:
-        f.write(content)
+    result = "User-agent: *\nDisallow: /\n"
+    write_file(input_file, result, True)
 else:
     print(f"::error::Unknown type: {input_type}")
     sys.exit(1)
 
 
+if not result:
+    print("::error::No results, this is probably a bug?")
+    sys.exit(1)
+
+
 # Outputs
 # https://docs.github.com/en/actions/using-workflows/workflow-commands-for-github-actions#setting-an-output-parameter
-if result:
-    print("Setting output: content")
-    with open(os.environ["GITHUB_OUTPUT"], "a") as f:
-        # noinspection PyTypeChecker
-        print(f"content<<EOF\n{result}\nEOF", file=f)
+print("Setting output: content")
+with open(os.environ["GITHUB_OUTPUT"], "a") as f:
+    # noinspection PyTypeChecker
+    print(f"content<<EOF\n{result}\nEOF", file=f)
 
 
 print("✅ \033[32;1mFinished Success")
