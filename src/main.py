@@ -1,42 +1,38 @@
 import os
 from pathlib import Path
 
+from actions import core
 from jinja2 import Environment, FileSystemLoader, select_autoescape
-from yaml import Loader, load
 
 from functions import write_file
 
 
-version: str = os.environ.get("GITHUB_WORKFLOW_REF", "") or "Dev Build"
-version = version.rsplit("/", 1)[-1]
-
-print(f"🏳️ Starting Create Files Action - \033[36;1m{version}")
+version: str = core.get_version()
+core.info(f"🏳️ Starting Create Files Action - \033[36;1m{version}")
 
 
 # Inputs
-print("::group::Inputs")
-input_type = os.environ.get("INPUT_TYPE", "").strip().lower()
-print(f"input_type: \033[36;1m{repr(input_type)}")
-input_file = os.environ.get("INPUT_FILE", "").strip()
-print(f"input_file: \033[36;1m{repr(input_file)}")
-input_data = os.environ.get("INPUT_DATA", "").strip()
-print(f"input_data: \033[36;1m{repr(input_data)}")
-data = load(input_data, Loader=Loader)
-print(f"data: {data}")
-print("::endgroup::")  # Inputs
+core.start_group("Inputs")
+input_type = core.get_input("type").lower()
+core.info(f"input_type: \033[36;1m{repr(input_type)}")
+input_file = core.get_input("file")
+core.info(f"input_file: \033[36;1m{repr(input_file)}")
+data = core.get_data("data")
+core.info(f"data: {data}")
+core.end_group()  # Inputs
 
 
 # Setup
-print("::group::Setup")
-print(f"getcwd: {os.getcwd()}")
+core.start_group("Setup")
+core.info(f"getcwd: {os.getcwd()}")
 src_path = Path(__file__).resolve().parent
-print(f"src_path: {src_path}")
+core.info(f"src_path: {src_path}")
 templates = src_path / "templates"
-print(f"templates: {templates}")
-print("::endgroup::")  # Setup
+core.info(f"templates: {templates}")
+core.end_group()  # Setup
 
-
-print(f"⌛ Processing type: \033[35m{input_type}")
+# Action
+core.info(f"⌛ Processing type: \033[35m{input_type}")
 
 env = Environment(loader=FileSystemLoader(templates), autoescape=select_autoescape())
 
@@ -44,37 +40,25 @@ result = None
 
 if input_type == "redirect":
     if "url" not in data:
-        print("::error::Missing required data: url")
-        # sys.exit(1)
-        raise SystemExit
+        core.set_failed("Missing required data: url")
     ctx = {"title": "Redirecting", "timer": 5}
     ctx.update(data)
     if "text" not in ctx:
         ctx["text"] = data["url"]
     template = env.get_template("redirect.jinja")
     result = template.render(ctx)
-    # print(f"result: {result}")
     write_file(input_file, result, True)
 elif input_type == "robots":
     result = "User-agent: *\nDisallow: /\n"
     write_file(input_file, result, True)
 else:
-    print(f"::error::Unknown type: {input_type}")
-    # sys.exit(1)
-    raise SystemExit
-
+    core.set_failed(f"Unknown type: {input_type}")
 
 if not result:
-    print("::error::No results, this is probably a bug?")
-    # sys.exit(1)
-    raise SystemExit
+    core.set_failed("No results, this is probably a bug?")
 
 
-# Outputs
-# https://docs.github.com/en/actions/using-workflows/workflow-commands-for-github-actions#setting-an-output-parameter
-with open(os.environ["GITHUB_OUTPUT"], "a") as f:
-    # noinspection PyTypeChecker
-    print(f"content<<EOF\n{result}\nEOF", file=f)
+# Output
+core.set_output("content", result)
 
-
-print("✅ \033[32;1mFinished Success")
+core.info("✅ \033[32;1mFinished Success")

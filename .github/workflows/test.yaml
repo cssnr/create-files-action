@@ -64,6 +64,7 @@ jobs:
           done
 
       - name: "Test - redirect"
+        if: ${{ !cancelled() }}
         id: redirect
         uses: ./
         with:
@@ -76,6 +77,7 @@ jobs:
             timer: 3
 
       - name: "Test - robots"
+        if: ${{ !cancelled() }}
         id: robots
         uses: ./
         with:
