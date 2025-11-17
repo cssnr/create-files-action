@@ -60,9 +60,9 @@ if not result:
 
 
 # TODO: Multi-line output requires actions-tools v0.2.2
-core.set_output("content", result)
-# with open(os.environ["GITHUB_OUTPUT"], "a") as f:
-#     print(f"content<<EOF\n{result}\nEOF", file=f)  # type: ignore
+# core.set_output("content", result)
+with open(os.environ["GITHUB_OUTPUT"], "a") as f:
+    print(f"content<<EOF\n{result}\nEOF", file=f)  # type: ignore
 
 
 core.info("✅ \033[32;1mFinished Success")
