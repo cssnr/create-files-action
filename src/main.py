@@ -12,13 +12,14 @@ core.info(f"🏳️ Starting Create Files Action - \033[36;1m{version}")
 
 
 # Inputs
-with core.group("Inputs"):
-    input_type = core.get_input("type").lower()
-    core.info(f"input_type: \033[36;1m{repr(input_type)}")
-    input_file = core.get_input("file")
-    core.info(f"input_file: \033[36;1m{repr(input_file)}")
-    data = core.get_data("data")
-    core.info(f"data: {data}")
+core.start_group("Inputs")
+input_type = core.get_input("type").lower()
+core.info(f"input_type: \033[36;1m{repr(input_type)}")
+input_file = core.get_input("file")
+core.info(f"input_file: \033[36;1m{repr(input_file)}")
+data = core.get_data("data")
+core.info(f"data: {data}")
+core.end_group()  # Inputs
 
 
 # Setup
@@ -30,7 +31,7 @@ templates = src_path / "templates"
 core.info(f"templates: {templates}")
 core.end_group()  # Setup
 
-
+# Action
 core.info(f"⌛ Processing type: \033[35m{input_type}")
 
 env = Environment(loader=FileSystemLoader(templates), autoescape=select_autoescape())
@@ -46,7 +47,6 @@ if input_type == "redirect":
         ctx["text"] = data["url"]
     template = env.get_template("redirect.jinja")
     result = template.render(ctx)
-    # print(f"result: {result}")
     write_file(input_file, result, True)
 elif input_type == "robots":
     result = "User-agent: *\nDisallow: /\n"
@@ -54,12 +54,11 @@ elif input_type == "robots":
 else:
     core.set_failed(f"Unknown type: {input_type}")
 
-
 if not result:
     core.set_failed("No results, this is probably a bug?")
 
 
+# Output
 core.set_output("content", result)
-
 
 core.info("✅ \033[32;1mFinished Success")
