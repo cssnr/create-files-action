@@ -1,5 +1,4 @@
 import os
-import sys
 from pathlib import Path
 
 from jinja2 import Environment, FileSystemLoader, select_autoescape
@@ -17,13 +16,13 @@ print(f"🏳️ Starting Create Files Action - \033[36;1m{version}")
 # Inputs
 print("::group::Inputs")
 input_type = os.environ.get("INPUT_TYPE", "").strip().lower()
-print(f"input_type: \033[36;1m{input_type}")
+print(f"input_type: \033[36;1m{repr(input_type)}")
 input_file = os.environ.get("INPUT_FILE", "").strip()
-print(f"input_file: \033[36;1m{input_file}")
+print(f"input_file: \033[36;1m{repr(input_file)}")
 input_data = os.environ.get("INPUT_DATA", "").strip()
-# print(f"input_data: \033[36;1m{input_data}")
+print(f"input_data: \033[36;1m{repr(input_data)}")
 data = load(input_data, Loader=Loader)
-print(f"input_data: \033[36;1m{data}")
+print(f"data: {data}")
 print("::endgroup::")  # Inputs
 
 
@@ -46,7 +45,8 @@ result = None
 if input_type == "redirect":
     if "url" not in data:
         print("::error::Missing required data: url")
-        sys.exit(1)
+        # sys.exit(1)
+        raise SystemExit
     ctx = {"title": "Redirecting", "timer": 5}
     ctx.update(data)
     if "text" not in ctx:
@@ -60,12 +60,14 @@ elif input_type == "robots":
     write_file(input_file, result, True)
 else:
     print(f"::error::Unknown type: {input_type}")
-    sys.exit(1)
+    # sys.exit(1)
+    raise SystemExit
 
 
 if not result:
     print("::error::No results, this is probably a bug?")
-    sys.exit(1)
+    # sys.exit(1)
+    raise SystemExit
 
 
 # Outputs
