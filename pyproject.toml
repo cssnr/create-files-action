@@ -4,22 +4,20 @@ name = "create-files-action"
 version = "0.0.1"
 requires-python = ">=3.10"
 dependencies = [
-    "actions-tools[github]",
-    "Jinja2>=3,<4",
+  "Jinja2>=3,<4",
+  "actions-tools[github]",
 ]
 
 [dependency-groups]
 dev = [
-    "bandit",
-    "black",
-    "isort",
-    "mypy",
-    "PyGitHub",
-    "pyyaml",
-    "ruff",
-    "yamllint",
-    "ty",
-    "types-PyYAML",
+  "bandit",
+  "black",
+  "isort",
+  "mypy",
+  "ruff",
+  "tombi",
+  "ty",
+  "yamllint",
 ]
 
 # Bandit
@@ -50,7 +48,7 @@ skip = [".venv", ".github"]
 # Mypy
 # https://mypy.readthedocs.io/en/stable/config_file.html
 [tool.mypy]
-#ignore_missing_imports = true
+# ignore_missing_imports = true
 exclude = [".venv"]
 
 # Ruff

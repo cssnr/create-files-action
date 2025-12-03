@@ -1,6 +1,7 @@
 name: "Create Files"
 description: "Easily Create Various Files from Templates with Custom Options."
 author: "Shane"
+
 branding:
   icon: "file-plus"
   color: "green"
@@ -23,4 +24,3 @@ outputs:
 runs:
   using: "docker"
   image: "Dockerfile"
-  #image: "docker://ghcr.io/cssnr/create-files-action:v1.0.0"
