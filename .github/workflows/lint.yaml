@@ -4,7 +4,12 @@ on:
   workflow_dispatch:
   push:
     branches: [master]
+    paths-ignore:
+      - ".gitattributes"
+      - ".gitignore"
+      - ".prettierignore"
   pull_request:
+    branches: [master]
 
 concurrency:
   group: ${{ github.workflow }}-${{ github.ref }}
@@ -95,6 +100,11 @@ jobs:
         run: |
           uv run tombi lint
 
+      - name: "yamllint"
+        if: ${{ !cancelled() }}
+        run: |
+          uvx toml-run yamllint
+
       - name: "prettier"
         if: ${{ !cancelled() }}
         run: |
@@ -103,19 +113,9 @@ jobs:
           echo "::endgroup::"
           npx prettier --check .
 
-      - name: "yamllint"
-        if: ${{ !cancelled() }}
-        env:
-          CONFIG: "{extends: relaxed, ignore: [node_modules/], rules: {line-length: {max: 119}}}"
-        run: |
-          echo "::group::List Files"
-          yamllint -d '${{ env.CONFIG }}' --list-files .
-          echo "::endgroup::"
-          yamllint -d '${{ env.CONFIG }}' .
-
       - name: "actionlint"
         if: ${{ !cancelled() }}
-        uses: cssnr/actionlint-action@master
+        uses: cssnr/actionlint-action@v1
 
       - name: "hadolint"
         if: ${{ !cancelled() }}
